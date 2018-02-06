@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const config = require('./config/database');
+const path = require('path');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.uri, (err) => {
@@ -12,6 +13,8 @@ mongoose.connect(config.uri, (err) => {
             console.log('Succesfully connected to the database !!!', + config.db);
         }
 });
+
+app.use(express.static(__dirname + '/client/dist/'));
 
 app.get('*', (req,res) => { // * any route / current route
     res.send('<h4>hello world</h4>');
